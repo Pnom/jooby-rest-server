@@ -1,10 +1,8 @@
-import {analog, mtx, mtxLora, directions, utils} from '../externals/joobyCodec.js';
-import DataSegment from 'jooby-codec/analog/commands/DataSegmentBase.js';
-import {getSegmentCollector, removeSegmentCollector} from './utils/segmentCollector.js';
-import UnknownCommand from 'jooby-codec/mtxLora/UnknownCommand.js';
-import {prepareCommand, prepareCommands} from './utils/prepareCommands.js';
-import codecsNames from './utils/codecsNames.js';
-import errors from '../errors.js';
+import {decodeAnalogMessage} from './utils/decodeAnalogMessage.js';
+import {analog, mtx, mtxLora, utils} from '../../externals/joobyCodec.js';
+import UnknownCommand from '../../../../../jooby-codecs/jooby-codec/dist/mtxLora/UnknownCommand.js';
+import {prepareCommands} from '../utils/prepareCommands.js';
+import errors from '../../errors.js';
 
 
 const prepareMtxMessage = ( codecName, {messageId, accessLevel, commands} ) => ({
@@ -15,86 +13,87 @@ const prepareMtxMessage = ( codecName, {messageId, accessLevel, commands} ) => (
 });
 
 const readMtxLoraMessage = ( data, options ) => {
-    const message = mtxLora.message.fromBytes(data, options);
+    const message = mtxLora.message.fromBytes(data, {...options, skipLrcCheck: true});
 
-    if ( !message.commands.some(({command}) => command instanceof UnknownCommand) ) {
-        return prepareMtxMessage(codecsNames.get(mtxLora), message);
-    }
-
-    return null;
+    return message.commands.some(({command}) => command instanceof UnknownCommand)
+        ? null
+        : prepareMtxMessage('mtxLora', message);
 };
 
 const readMtxMessage = ( data, options ) => {
     const message = mtx.message.fromBytes(data, {...options, skipLrcCheck: true});
 
-    return prepareMtxMessage(codecsNames.get(mtx), message);
+    return prepareMtxMessage('mtx', message);
 };
 
-const processMtxBuffer = ( buffer, options ) => {
-    const message = readMtxLoraMessage(buffer, options) || readMtxMessage(buffer, options);
+const processMtxBuffer = ( data, options ) => {
+    const {commands} = readMtxLoraMessage(data, options) || readMtxMessage(data, options);
 
-    if ( message ) {
-        message.isValid = true;
-        message.data = utils.getBase64FromBytes(buffer);
-    }
-
-    return message;
+    return {
+        codec: 'mtxLora',
+        data: utils.getStringFromBytes(data, options.encodingFormat),
+        commands
+    };
 };
-
 
 /**
  * @this fastify.FastifyInstance
  */
-export async function decode ( request, reply ) {
-    const {message} = analog;
-    const {deviceEUI, data} = request.body;
-    const analogCommands = [];
-    let mtxMessage;
+export default function decode ( request, reply ) {
+    const {
+        bytes,
+        deviceEUI,
+        framingFormat,
+        protocolOptions,
+        response
+    } = request.body;
+    const mtxMessages = [];
 
-    // eslint-disable-next-line import/namespace
-    const direction = directions ? directions[request.body.direction.toUpperCase()] : undefined;
+    if ( framingFormat === 'hdlc' ) {
+        reply.sendError(errors.BAD_REQUEST, 'The HDLC framing format is not supported for the mtxLora');
+
+        return;
+    }
 
     try {
-        const {commands, isValid} = message.fromBase64(
-            data,
-            {direction, hardwareType: analog.constants.hardwareTypes.MTXLORA}
-        );
+        const {
+            isValid,
+            commands,
+            assembledData
+        } = decodeAnalogMessage(bytes, {...protocolOptions, hardwareType: analog.constants.hardwareTypes.MTXLORA, deviceEUI});
 
-        for ( let index = 0; index < commands.length; index++ ) {
-            const {command} = commands[index];
+        for ( let index = 0; index < assembledData.length; index++ ) {
+            const mtxBuffer = assembledData[index];
 
-            if ( command instanceof DataSegment ) {
-                const collector = getSegmentCollector(deviceEUI);
-                const dataSegment = {...command.parameters, data: new Uint8Array(command.parameters.data)};
-                const mtxBuffer = collector.push(dataSegment);
+            if ( mtxBuffer.length !== 0 ) {
+                const mtxMessage = processMtxBuffer(mtxBuffer.data, protocolOptions);
 
-                command.parameters.data = utils.getBase64FromBytes(command.parameters.data);
-
-                if ( mtxBuffer.length !== 0 ) {
-                    mtxMessage = processMtxBuffer(mtxBuffer, {direction}) || {};
-                    mtxMessage.segmentationSessionId = dataSegment.segmentationSessionId;
-                    mtxMessage.deviceEUI = deviceEUI;
-                    removeSegmentCollector(deviceEUI);
+                if ( mtxMessage ) {
+                    mtxMessages.push({
+                        ...response,
+                        segmentationSessionId: mtxBuffer.segmentationSessionId,
+                        data: utils.getStringFromBytes(mtxBuffer, protocolOptions.encodingFormat),
+                        ...mtxMessage
+                    });
                 }
             }
-
-            analogCommands.push(prepareCommand(command));
         }
 
         const result = [{
+            ...response,
+            codec: 'mtxLora',
             isValid,
-            deviceEUI,
-            data,
-            codec: codecsNames.get(analog),
-            commands: analogCommands
+            commands: prepareCommands(commands)
         }];
 
-        if ( mtxMessage?.isValid ) {
-            result.push(mtxMessage);
-        }
+        reply.send(mtxMessages.length === 0 ? result : result.concat(mtxMessages));
 
-        reply.send(result);
+        reply.send({
+            codec: 'mtxLora',
+            ...response,
+            ...result
+        });
     } catch ( error ) {
-        reply.sendError(errors.INTERNAL_SERVER_ERROR, error);
+        reply.sendError(errors.BAD_REQUEST, error);
     }
 }

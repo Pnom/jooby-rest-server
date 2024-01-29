@@ -1,0 +1,343 @@
+TAP version 14
+[36m<ref *1>[39m {
+  routing: [36m[Function: preRouting][39m,
+  getDefaultRoute: [36m[Function: bound getDefaultRoute][39m,
+  setDefaultRoute: [36m[Function: bound setDefaultRoute][39m,
+  delete: [36m[Function: _delete][39m,
+  get: [36m[Function: _get][39m,
+  head: [36m[Function: _head][39m,
+  patch: [36m[Function: _patch][39m,
+  post: [36m[Function: _post][39m,
+  put: [36m[Function: _put][39m,
+  options: [36m[Function: _options][39m,
+  all: [36m[Function: _all][39m,
+  route: [36m[Function: _route][39m,
+  hasRoute: [36m[Function: _route][39m,
+  log: EventEmitter {
+    levels: { labels: [36m[Object][39m, values: [36m[Object][39m },
+    silent: [36m[Function: noop][39m,
+    onChild: [36m[Function: noop][39m,
+    trace: [36m[Function: noop][39m,
+    debug: [36m[Function: noop][39m,
+    info: [36m[Function: LOG][39m,
+    warn: [36m[Function: LOG][39m,
+    error: [36m[Function: LOG][39m,
+    fatal: [36m[Function (anonymous)][39m,
+    [[32mSymbol(pino.useOnlyCustomLevels)[39m]: [33mfalse[39m,
+    [[32mSymbol(pino.stream)[39m]: ThreadStream {
+      _events: [36m[Object: null prototype][39m,
+      _eventsCount: [33m2[39m,
+      _maxListeners: [90mundefined[39m,
+      worker: [36m[Worker][39m,
+      [[32mSymbol(shapeMode)[39m]: [33mfalse[39m,
+      [[32mSymbol(kCapture)[39m]: [33mfalse[39m,
+      [[32mSymbol(kImpl)[39m]: [36m[Object][39m
+    },
+    [[32mSymbol(pino.time)[39m]: [36m[Function: epochTime][39m,
+    [[32mSymbol(pino.timeSliceIndex)[39m]: [33m8[39m,
+    [[32mSymbol(pino.stringify)[39m]: [36m[Function: stringify][39m,
+    [[32mSymbol(pino.stringifySafe)[39m]: [36m[Function: stringify][39m,
+    [[32mSymbol(pino.stringifiers)[39m]: {},
+    [[32mSymbol(pino.end)[39m]: [32m'}\n'[39m,
+    [[32mSymbol(pino.formatOpts)[39m]: { stringify: [36m[Function: bound stringify][39m },
+    [[32mSymbol(pino.messageKey)[39m]: [32m'msg'[39m,
+    [[32mSymbol(pino.errorKey)[39m]: [32m'err'[39m,
+    [[32mSymbol(pino.nestedKey)[39m]: [1mnull[22m,
+    [[32mSymbol(pino.nestedKeyStr)[39m]: [32m''[39m,
+    [[32mSymbol(pino.serializers)[39m]: {
+      err: [36m[Function: errSerializer][39m,
+      req: [36m[Function: asReqValue][39m,
+      res: [36m[Function: asResValue][39m
+    },
+    [[32mSymbol(pino.mixin)[39m]: [90mundefined[39m,
+    [[32mSymbol(pino.mixinMergeStrategy)[39m]: [90mundefined[39m,
+    [[32mSymbol(pino.chindings)[39m]: [32m',"pid":4108,"hostname":"LAPTOP-62DP8USE"'[39m,
+    [[32mSymbol(pino.formatters)[39m]: {
+      level: [36m[Function: level][39m,
+      bindings: [36m[Function: bindings][39m,
+      log: [90mundefined[39m
+    },
+    [[32mSymbol(pino.hooks)[39m]: { logMethod: [90mundefined[39m },
+    [[32mSymbol(pino.msgPrefix)[39m]: [90mundefined[39m,
+    [[32mSymbol(pino.lsCache)[39m]: {
+      [32m'10'[39m: [32m'{"level":10'[39m,
+      [32m'20'[39m: [32m'{"level":20'[39m,
+      [32m'30'[39m: [32m'{"level":30'[39m,
+      [32m'40'[39m: [32m'{"level":40'[39m,
+      [32m'50'[39m: [32m'{"level":50'[39m,
+      [32m'60'[39m: [32m'{"level":60'[39m
+    },
+    [[32mSymbol(pino.levelVal)[39m]: [33m30[39m
+  },
+  withTypeProvider: [36m[Function: withTypeProvider][39m,
+  addHook: [36m[Function: addHook][39m,
+  addSchema: [36m[Function: addSchema][39m,
+  getSchema: [36m[Function: bound getSchema][39m,
+  getSchemas: [36m[Function: bound getSchemas][39m,
+  setValidatorCompiler: [36m[Function: setValidatorCompiler][39m,
+  setSerializerCompiler: [36m[Function: setSerializerCompiler][39m,
+  setSchemaController: [36m[Function: setSchemaController][39m,
+  setReplySerializer: [36m[Function: setReplySerializer][39m,
+  setSchemaErrorFormatter: [36m[Function: setSchemaErrorFormatter][39m,
+  addContentTypeParser: [36m[Function: addContentTypeParser][39m,
+  hasContentTypeParser: [36m[Function: hasContentTypeParser][39m,
+  getDefaultJsonParser: [36m[Function: getDefaultJsonParser][39m,
+  defaultTextParser: [36m[Function: defaultPlainTextParser][39m,
+  removeContentTypeParser: [36m[Function: removeContentTypeParser][39m,
+  removeAllContentTypeParsers: [36m[Function: removeAllContentTypeParsers][39m,
+  register: [36m[Function (anonymous)][39m,
+  after: [36m[Function (anonymous)][39m,
+  ready: [36m[Function: ready][39m,
+  onClose: [36m[Function (anonymous)][39m,
+  close: [36m[Function (anonymous)][39m,
+  printPlugins: [36m[Function: bound ][39m,
+  hasPlugin: [36m[Function: hasPlugin][39m,
+  listen: [36m[Function: listen][39m,
+  server: Server {
+    maxHeaderSize: [90mundefined[39m,
+    insecureHTTPParser: [90mundefined[39m,
+    requestTimeout: [33m0[39m,
+    headersTimeout: [33m60000[39m,
+    keepAliveTimeout: [33m72000[39m,
+    connectionsCheckingInterval: [33m30000[39m,
+    requireHostHeader: [33mtrue[39m,
+    joinDuplicateHeaders: [90mundefined[39m,
+    rejectNonStandardBodyWrites: [33mfalse[39m,
+    _events: [Object: null prototype] {
+      request: [36m[Function: preRouting][39m,
+      connection: [36m[Function: connectionListener][39m,
+      listening: [36m[Function: setupConnectionsTracking][39m,
+      clientError: [36m[Function: bound defaultClientErrorHandler][39m
+    },
+    _eventsCount: [33m4[39m,
+    _maxListeners: [90mundefined[39m,
+    _connections: [33m0[39m,
+    _handle: [1mnull[22m,
+    _usingWorkers: [33mfalse[39m,
+    _workers: [],
+    _unref: [33mfalse[39m,
+    allowHalfOpen: [33mtrue[39m,
+    pauseOnConnect: [33mfalse[39m,
+    noDelay: [33mtrue[39m,
+    keepAlive: [33mfalse[39m,
+    keepAliveInitialDelay: [33m0[39m,
+    highWaterMark: [33m16384[39m,
+    httpAllowHalfOpen: [33mfalse[39m,
+    timeout: [33m0[39m,
+    maxHeadersCount: [1mnull[22m,
+    maxRequestsPerSocket: [33m0[39m,
+    [[32mSymbol(IncomingMessage)[39m]: [36m[Function: IncomingMessage][39m,
+    [[32mSymbol(ServerResponse)[39m]: [36m[Function: ServerResponse][39m,
+    [[32mSymbol(shapeMode)[39m]: [33mfalse[39m,
+    [[32mSymbol(kCapture)[39m]: [33mfalse[39m,
+    [[32mSymbol(async_id_symbol)[39m]: [33m-1[39m,
+    [[32mSymbol(kUniqueHeaders)[39m]: [1mnull[22m
+  },
+  addresses: [36m[Function: addresses][39m,
+  decorate: [36m[Function: decorateFastify][39m,
+  hasDecorator: [36m[Function: checkExistence][39m,
+  decorateReply: [36m[Function: decorateReply][39m,
+  decorateRequest: [36m[Function: decorateRequest][39m,
+  hasRequestDecorator: [36m[Function: checkRequestExistence][39m,
+  hasReplyDecorator: [36m[Function: checkReplyExistence][39m,
+  inject: [36m[Function: inject][39m,
+  printRoutes: [36m[Function: printRoutes][39m,
+  setNotFoundHandler: [36m[Function: setNotFoundHandler][39m,
+  setErrorHandler: [36m[Function: setErrorHandler][39m,
+  setChildLoggerFactory: [36m[Function: setChildLoggerFactory][39m,
+  initialConfig: {
+    connectionTimeout: [33m0[39m,
+    keepAliveTimeout: [33m72000[39m,
+    maxRequestsPerSocket: [33m0[39m,
+    requestTimeout: [33m0[39m,
+    requestIdHeader: [32m'request-id'[39m,
+    requestIdLogLabel: [32m'reqId'[39m,
+    disableRequestLogging: [33mfalse[39m,
+    bodyLimit: [33m1048576[39m,
+    caseSensitive: [33mtrue[39m,
+    allowUnsafeRegex: [33mfalse[39m,
+    ignoreTrailingSlash: [33mfalse[39m,
+    ignoreDuplicateSlashes: [33mfalse[39m,
+    jsonShorthand: [33mtrue[39m,
+    maxParamLength: [33m100[39m,
+    onProtoPoisoning: [32m'error'[39m,
+    onConstructorPoisoning: [32m'error'[39m,
+    pluginTimeout: [33m10000[39m,
+    http2SessionTimeout: [33m72000[39m,
+    exposeHeadRoutes: [33mtrue[39m
+  },
+  addConstraintStrategy: [36m[Function: bound addConstraintStrategy][39m,
+  hasConstraintStrategy: [36m[Function: bound hasConstraintStrategy][39m,
+  [[32mSymbol(fastify.state)[39m]: { listening: [33mfalse[39m, closing: [33mfalse[39m, started: [33mfalse[39m },
+  [[32mSymbol(fastify.keepAliveConnections)[39m]: {
+    add: [36m[Function: add][39m,
+    delete: [36m[Function: delete][39m,
+    has: [36m[Function: has][39m,
+    [[32mSymbol(Symbol.iterator)[39m]: [36m[GeneratorFunction: [Symbol.iterator]][39m
+  },
+  [[32mSymbol(fastify.options)[39m]: {
+    logger: EventEmitter {
+      levels: [36m[Object][39m,
+      silent: [36m[Function: noop][39m,
+      onChild: [36m[Function: noop][39m,
+      trace: [36m[Function: noop][39m,
+      debug: [36m[Function: noop][39m,
+      info: [36m[Function: LOG][39m,
+      warn: [36m[Function: LOG][39m,
+      error: [36m[Function: LOG][39m,
+      fatal: [36m[Function (anonymous)][39m,
+      [[32mSymbol(pino.useOnlyCustomLevels)[39m]: [33mfalse[39m,
+      [[32mSymbol(pino.stream)[39m]: [36m[ThreadStream][39m,
+      [[32mSymbol(pino.time)[39m]: [36m[Function: epochTime][39m,
+      [[32mSymbol(pino.timeSliceIndex)[39m]: [33m8[39m,
+      [[32mSymbol(pino.stringify)[39m]: [36m[Function: stringify][39m,
+      [[32mSymbol(pino.stringifySafe)[39m]: [36m[Function: stringify][39m,
+      [[32mSymbol(pino.stringifiers)[39m]: {},
+      [[32mSymbol(pino.end)[39m]: [32m'}\n'[39m,
+      [[32mSymbol(pino.formatOpts)[39m]: [36m[Object][39m,
+      [[32mSymbol(pino.messageKey)[39m]: [32m'msg'[39m,
+      [[32mSymbol(pino.errorKey)[39m]: [32m'err'[39m,
+      [[32mSymbol(pino.nestedKey)[39m]: [1mnull[22m,
+      [[32mSymbol(pino.nestedKeyStr)[39m]: [32m''[39m,
+      [[32mSymbol(pino.serializers)[39m]: [36m[Object][39m,
+      [[32mSymbol(pino.mixin)[39m]: [90mundefined[39m,
+      [[32mSymbol(pino.mixinMergeStrategy)[39m]: [90mundefined[39m,
+      [[32mSymbol(pino.chindings)[39m]: [32m',"pid":4108,"hostname":"LAPTOP-62DP8USE"'[39m,
+      [[32mSymbol(pino.formatters)[39m]: [36m[Object][39m,
+      [[32mSymbol(pino.hooks)[39m]: [36m[Object][39m,
+      [[32mSymbol(pino.msgPrefix)[39m]: [90mundefined[39m,
+      [[32mSymbol(pino.lsCache)[39m]: [36m[Object][39m,
+      [[32mSymbol(pino.levelVal)[39m]: [33m30[39m
+    },
+    genReqId: [36m[Function (anonymous)][39m,
+    connectionTimeout: [33m0[39m,
+    keepAliveTimeout: [33m72000[39m,
+    maxRequestsPerSocket: [33m0[39m,
+    requestTimeout: [33m0[39m,
+    requestIdHeader: [32m'request-id'[39m,
+    requestIdLogLabel: [32m'reqId'[39m,
+    disableRequestLogging: [33mfalse[39m,
+    ajv: { customOptions: {}, plugins: [] },
+    clientErrorHandler: [36m[Function: defaultClientErrorHandler][39m,
+    exposeHeadRoutes: [33mtrue[39m,
+    http2SessionTimeout: [33m72000[39m
+  },
+  [[32mSymbol(fastify.children)[39m]: [],
+  [[32mSymbol(fastify.serverBindings)[39m]: [],
+  [[32mSymbol(fastify.bodyLimit)[39m]: [33m1048576[39m,
+  [[32mSymbol(fastify.routePrefix)[39m]: [32m''[39m,
+  [[32mSymbol(fastify.logLevel)[39m]: [32m''[39m,
+  [[32mSymbol(fastify.logSerializers)[39m]: [1mnull[22m,
+  [[32mSymbol(fastify.hooks)[39m]: Hooks <[36m[Object: null prototype][39m> {
+    onRequest: [],
+    preParsing: [],
+    preValidation: [],
+    preSerialization: [],
+    preHandler: [],
+    onResponse: [],
+    onSend: [],
+    onError: [],
+    onRoute: [],
+    onRegister: [],
+    onReady: [],
+    onListen: [],
+    onTimeout: [],
+    onRequestAbort: [],
+    preClose: []
+  },
+  [[32mSymbol(fastify.schemaController)[39m]: SchemaController {
+    opts: {
+      bucket: [36m[Function: buildSchemas][39m,
+      compilersFactory: [36m[Object][39m,
+      isCustomValidatorCompiler: [33mfalse[39m,
+      isCustomSerializerCompiler: [33mfalse[39m
+    },
+    addedSchemas: [33mfalse[39m,
+    compilersFactory: {
+      buildValidator: [36m[Function: buildCompilerFromPool][39m,
+      buildSerializer: [36m[Function: buildSerializerFactory][39m
+    },
+    isCustomValidatorCompiler: [33mfalse[39m,
+    isCustomSerializerCompiler: [33mfalse[39m,
+    schemaBucket: Schemas { store: {} }
+  },
+  [[32mSymbol(fastify.schemaErrorFormatter)[39m]: [1mnull[22m,
+  [[32mSymbol(fastify.errorHandler)[39m]: { func: [36m[Function: defaultErrorHandler][39m, toJSON: [36m[Function: toJSON][39m },
+  [[32mSymbol(fastify.childLoggerFactory)[39m]: [36m[Function: defaultChildLoggerFactory][39m,
+  [[32mSymbol(fastify.replySerializerDefault)[39m]: [1mnull[22m,
+  [[32mSymbol(fastify.contentTypeParser)[39m]: ContentTypeParser {
+    customParsers: Map(2) { [32m'application/json'[39m => [36m[Parser][39m, [32m'text/plain'[39m => [36m[Parser][39m },
+    parserList: [ [36m[ParserListItem][39m, [36m[ParserListItem][39m ],
+    parserRegExpList: [],
+    cache: FifoObject {
+      first: [1mnull[22m,
+      items: [Object: null prototype] {},
+      last: [1mnull[22m,
+      size: [33m0[39m,
+      max: [33m100[39m,
+      ttl: [33m0[39m
+    },
+    [[32mSymbol(fastify.defaultJSONParse)[39m]: [36m[Function: defaultJsonParser][39m
+  },
+  [[32mSymbol(fastify.Reply)[39m]: [Function: _Reply] {
+    parent: [Function: Reply] {
+      props: [],
+      buildReply: [36m[Function: buildReply][39m,
+      setupResponseListeners: [36m[Function: setupResponseListeners][39m
+    },
+    props: []
+  },
+  [[32mSymbol(fastify.Request)[39m]: [Function: _Request] {
+    props: [],
+    parent: [Function: Request] {
+      props: [],
+      buildRequest: [36m[Function: buildRequest][39m
+    }
+  },
+  [[32mSymbol(fastify.404)[39m]: {
+    router: Router {
+      _opts: [36m[Object][39m,
+      defaultRoute: [36m[Function: bound fourOhFourFallBack][39m,
+      onBadUrl: [36m[Function: bound onBadUrl][39m,
+      buildPrettyMeta: [36m[Function: defaultBuildPrettyMeta][39m,
+      querystringParser: [36m[Function (anonymous)][39m,
+      caseSensitive: [33mtrue[39m,
+      ignoreTrailingSlash: [33mfalse[39m,
+      ignoreDuplicateSlashes: [33mfalse[39m,
+      maxParamLength: [33m100[39m,
+      allowUnsafeRegex: [33mfalse[39m,
+      constrainer: [36m[Constrainer][39m,
+      routes: [],
+      trees: {}
+    },
+    setNotFoundHandler: [36m[Function: setNotFoundHandler][39m,
+    setContext: [36m[Function: setContext][39m,
+    arrange404: [36m[Function: arrange404][39m
+  },
+  [[32mSymbol(registered-plugin)[39m]: [],
+  [[32mSymbol(fastify.pluginNameChain)[39m]: [ [32m'fastify'[39m ],
+  [[32mSymbol(fastify.avvioBoot)[39m]: [36m[Function (anonymous)][39m,
+  [[32mSymbol(kAvvio)[39m]: [33mtrue[39m,
+  [[32mSymbol(fastify.canSetNotFoundHandler)[39m]: [33mtrue[39m,
+  [[32mSymbol(fastify.404ContextKey)[39m]: [1mnull[22m,
+  [[32mSymbol(fastify.404LogLevelInstance)[39m]: [36m[Circular *1][39m
+}
+# Subtest: obis observer
+    1..0
+ok 1 - obis observer # time=22009.08ms
+
+Available routes:
+
+╔═══════════╤══════════════════════════╗
+║ [1m[37mMethod(s)[22m[39m │ [1m[37mPath[22m[39m                     ║
+╟───────────┼──────────────────────────╢
+║      [36mPOST[39m │ [1m[32m/v1/decoder[22m[39m              ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/analog[22m[39m       ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/mtx[22m[39m          ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/mtxLora[22m[39m      ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/obisObserver[22m[39m ║
+║       [36mGET[39m │ [1m[32m/v1/health[22m[39m               ║
+║      [36mHEAD[39m │ [1m[32m/v1/health[22m[39m               ║
+╚═══════════╧══════════════════════════╝
+
+null

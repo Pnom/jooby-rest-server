@@ -6,19 +6,21 @@
     "author": "",
     "scripts": {
         "lint": "eslint .",
-        "api:serve": "redoc-cli serve --watch api/openapi.json -p 3030 --ssr",
-        "api:build": "redoc-cli bundle api/openapi.json -o api/index.html",
+        "api:serve": "redocly serve --watch api/openapi.yaml -p 3030 --ssr",
+        "api:build": "redocly bundle api/openapi.yaml",
+        "api:build-docs": "redocly build-docs api/openapi.yaml -o api/index.html",
         "develop": "NODE_ENV=develop LOG_LEVEL=trace nodemon --ignore api/ src/index.js",
         "develop:inspect": "NODE_ENV=develop node --inspect src/index.js",
         "start": "node src/index.js",
-        "start:develop": "npm run api:serve & npm run develop"
+        "start:develop": "npm run api:serve & npm run develop",
+        "test": "npm run lint && node --test"
     },
     "devDependencies": {
+        "@redocly/cli": "^1.7.0",
         "eslint": "^8.51.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-plugin-import": "^2.28.1",
-        "nodemon": "^3.0.1",
-        "@redocly/cli": "^1.6.0"
+        "nodemon": "^3.0.1"
     },
     "dependencies": {
         "dotenv": "^16.0.0",

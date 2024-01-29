@@ -1,0 +1,123 @@
+TAP version 14
+Available routes:
+
+╔═══════════╤══════════════════════════╗
+║ [1m[37mMethod(s)[22m[39m │ [1m[37mPath[22m[39m                     ║
+╟───────────┼──────────────────────────╢
+║      [36mPOST[39m │ [1m[32m/v1/decoder[22m[39m              ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/analog[22m[39m       ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/mtx[22m[39m          ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/mtxLora[22m[39m      ║
+║      [36mPOST[39m │ [1m[32m/v1/decoder/obisObserver[22m[39m ║
+║       [36mGET[39m │ [1m[32m/v1/health[22m[39m               ║
+║      [36mHEAD[39m │ [1m[32m/v1/health[22m[39m               ║
+╚═══════════╧══════════════════════════╝
+
+[2024.01.25 01:10:42.192] [32mINFO[39m: [36mincoming request[39m
+    reqId: 1
+    req: {
+      "method": "POST",
+      "url": "/v1/decoder/obisObserver",
+      "hostname": "localhost:80",
+      "remoteAddress": "127.0.0.1"
+    }
+# Subtest: obis observer
+    ok 1 - should be equal
+    ok 2 - should be equivalent strictly
+    ok 3 - should be equal
+[2024.01.25 01:10:42.204] [32mINFO[39m: [36mrequest completed[39m
+    reqId: 1
+    res: {
+      "statusCode": 200
+    }
+    responseTime: 11.318299993872643
+    ok 4 - should be equivalent strictly
+[2024.01.25 01:10:42.212] [32mINFO[39m: [36mincoming request[39m
+    reqId: 2
+    req: {
+      "method": "POST",
+      "url": "/v1/decoder/obisObserver",
+      "hostname": "localhost:80",
+      "remoteAddress": "127.0.0.1"
+    }
+    ok 5 - should be equal
+    ok 6 - should be equivalent strictly
+    ok 7 - should be equal
+    ok 8 - should be equivalent strictly
+    ok 9 - should be equal
+    ok 10 - should be equivalent strictly
+    ok 11 - should be equal
+    ok 12 - should be equivalent strictly
+    1..12
+[2024.01.25 01:10:42.213] [32mINFO[39m: [36mrequest completed[39m
+    reqId: 2
+    res: {
+      "statusCode": 200
+    }
+    responseTime: 1.4883999973535538
+ok 1 - obis observer # time=1425.146ms
+
+[2024.01.25 01:10:42.215] [32mINFO[39m: [36mincoming request[39m
+    reqId: 3
+    req: {
+      "method": "POST",
+      "url": "/v1/decoder/obisObserver",
+      "hostname": "localhost:80",
+      "remoteAddress": "127.0.0.1"
+    }
+[2024.01.25 01:10:42.216] [32mINFO[39m: [36mrequest completed[39m
+    reqId: 3
+    res: {
+      "statusCode": 200
+    }
+    responseTime: 0.885000005364418
+[2024.01.25 01:10:42.217] [32mINFO[39m: [36mincoming request[39m
+    reqId: 4
+    req: {
+      "method": "POST",
+      "url": "/v1/decoder",
+      "hostname": "localhost:80",
+      "remoteAddress": "127.0.0.1"
+    }
+[2024.01.25 01:10:42.218] [32mINFO[39m: [36mrequest completed[39m
+    reqId: 4
+    res: {
+      "statusCode": 200
+    }
+    responseTime: 1.2942000031471252
+[2024.01.25 01:10:42.220] [32mINFO[39m: [36mincoming request[39m
+    reqId: 5
+    req: {
+      "method": "POST",
+      "url": "/v1/decoder",
+      "hostname": "localhost:80",
+      "remoteAddress": "127.0.0.1"
+    }
+[2024.01.25 01:10:42.221] [32mINFO[39m: [36mrequest completed[39m
+    reqId: 5
+    res: {
+      "statusCode": 200
+    }
+    responseTime: 1.0547000020742416
+[2024.01.25 01:10:42.222] [32mINFO[39m: [36mincoming request[39m
+    reqId: 6
+    req: {
+      "method": "POST",
+      "url": "/v1/decoder",
+      "hostname": "localhost:80",
+      "remoteAddress": "127.0.0.1"
+    }
+[2024.01.25 01:10:42.223] [32mINFO[39m: [36mrequest completed[39m
+    reqId: 6
+    res: {
+      "statusCode": 200
+    }
+    responseTime: 0.7428999990224838
+not ok 2 - timeout!
+  ---
+  signal: null
+  expired: TAP
+  test: TAP
+  ...
+
+1..2

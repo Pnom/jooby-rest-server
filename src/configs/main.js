@@ -1,5 +1,8 @@
 import pino from './pino.js';
+import {hexFormatOptions} from '../../../../jooby-codecs/jooby-codec/dist/config.js';
 
+
+hexFormatOptions.separator = '';
 
 const {env} = process;
 

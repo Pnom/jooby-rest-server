@@ -1,10 +1,10 @@
-import decode from '../../controllers/decoders/mtxLora.js';
-import encode from '../../controllers/encoders/mtxLora.js';
+import decode from '../../controllers/decoders/mtx.js';
+import encode from '../../controllers/encoders/mtx.js';
 import {validateMtxEncoderRequest, validateMtxDecoderRequest} from './utils/validateRequest.js';
 import {modifyDecoderRequest, modifyEncoderRequest} from './utils/modifyRequest.js';
 
 
-const resource = 'mtxLora';
+const resource = 'mtx';
 
 
 export default fastify => {

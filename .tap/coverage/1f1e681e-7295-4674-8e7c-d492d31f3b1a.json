@@ -1,0 +1,240 @@
+{
+  "result": [
+    {
+      "scriptId": "346",
+      "url": "file:///C:/works/virtualbox/shared/js/jooby-rest/jooby-rest-server/src/buildFastify.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 900,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "default",
+          "ranges": [
+            {
+              "startOffset": 332,
+              "endOffset": 898,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "genReqId",
+          "ranges": [
+            {
+              "startOffset": 428,
+              "endOffset": 448,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 694,
+              "endOffset": 873,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "348",
+      "url": "file:///C:/works/virtualbox/shared/js/jooby-rest/jooby-rest-server/src/configs/main.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 177,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "350",
+      "url": "file:///C:/works/virtualbox/shared/js/jooby-rest/jooby-rest-server/src/plugins/error.handler.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 435,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 161,
+              "endOffset": 432,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 219,
+              "endOffset": 415,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "351",
+      "url": "file:///C:/works/virtualbox/shared/js/jooby-rest/jooby-rest-server/src/plugins/reply/send.error.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 653,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 75,
+              "endOffset": 650,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "sendError",
+          "ranges": [
+            {
+              "startOffset": 484,
+              "endOffset": 628,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "354",
+      "url": "file:///C:/works/virtualbox/shared/js/jooby-rest/jooby-rest-server/src/configs/pino.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 408,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "362",
+      "url": "file:///C:/works/virtualbox/shared/js/jooby-rest/jooby-rest-server/src/errors.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 743,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 631,
+              "endOffset": 701,
+              "count": 4
+            }
+          ],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "387",
+      "url": "file:///C:/works/virtualbox/shared/js/jooby-rest/jooby-rest-server/src/utils/environment.js",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [
+            {
+              "startOffset": 0,
+              "endOffset": 942,
+              "count": 1
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getBoolean",
+          "ranges": [
+            {
+              "startOffset": 68,
+              "endOffset": 446,
+              "count": 1
+            },
+            {
+              "startOffset": 159,
+              "endOffset": 424,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "getNumber",
+          "ranges": [
+            {
+              "startOffset": 474,
+              "endOffset": 940,
+              "count": 0
+            }
+          ],
+          "isBlockCoverage": false
+        }
+      ]
+    }
+  ],
+  "timestamp": 108627.560109,
+  "source-map-cache": {}
+}

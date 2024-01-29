@@ -1,0 +1,25 @@
+TAP version 14
+# Subtest: fastify test
+    ok 1 - should be equal
+After test logic
+After test logic 2
+    1..1
+ok 1 - fastify test # time=92.876ms
+
+[2024.01.25 01:52:29.217] [32mINFO[39m: [36mincoming request[39m
+    reqId: 1
+    req: {
+      "method": "POST",
+      "url": "/v1/decoder/obisObserver",
+      "hostname": "localhost:80",
+      "remoteAddress": "127.0.0.1"
+    }
+[2024.01.25 01:52:29.224] [32mINFO[39m: [36mRoute POST:/v1/decoder/obisObserver not found[39m
+    reqId: 1
+[2024.01.25 01:52:29.229] [32mINFO[39m: [36mrequest completed[39m
+    reqId: 1
+    res: {
+      "statusCode": 404
+    }
+    responseTime: 10.239399999380112
+1..1

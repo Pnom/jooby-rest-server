@@ -1,13 +1,11 @@
-import {mtx, utils} from '@jooby-dev/jooby-codec/index.js';
-import {requestById, responseById} from '@jooby-dev/jooby-codec/mtx/constants/commandRelations.js';
+import {downlink, uplink} from '@jooby-dev/jooby-codec/mtx/message/index.js';
+import * as frame from '@jooby-dev/jooby-codec/mtx/utils/frame.js';
+import {accessLevels} from '@jooby-dev/jooby-codec/mtx/constants/index.js';
 import {HDLC} from '../../constants/framingFormats.js';
+import * as directions from '../../constants/directions.js';
+import encodeAnalogDataSegments from './utils/encodeAnalogDataSegments.js';
+import getStringFromBytes from '../../utils/getStringFromBytes.js';
 import errors from '../../errors.js';
-
-const constructCommand = command => {
-    const constructor = requestById.get(command.id) || responseById.get(command.id);
-
-    return new constructor(command);
-};
 
 
 /**
@@ -16,26 +14,31 @@ const constructCommand = command => {
 export default function encode ( {body}, reply ) {
     try {
         const {
-            accessLevel,
+            accessLevel = accessLevels.UNENCRYPTED,
+            commands,
+            messageId,
+            direction,
             aesKeyBytes,
+            frameHeader,
             framingFormat,
-            frame,
-            bytesConversionFormat,
             response
         } = body;
 
-        const {commands, messageId} = framingFormat === HDLC ? frame : body;
-
-        let bytes = mtx.message.toBytes(commands.map(constructCommand), {messageId, accessLevel, aesKey: aesKeyBytes});
+        const bytes = direction === directions.DOWNLINK
+            ? downlink.toBytes(commands, {messageId, accessLevel, aesKey: aesKeyBytes})
+            : uplink.toBytes(commands, {messageId, accessLevel, aesKey: aesKeyBytes});
 
         if ( framingFormat === HDLC ) {
-            bytes = mtx.message.toFrame(bytes, frame);
-            response.frame.data = utils.getStringFromBytes(bytes, {bytesConversionFormat});
+            reply.send({
+                ...response,
+                data: getStringFromBytes(frame.toBytes(bytes, frameHeader), body)
+            });
         } else {
-            response.data = utils.getStringFromBytes(bytes, {bytesConversionFormat});
+            reply.send({
+                ...response,
+                segments: encodeAnalogDataSegments(bytes, body)
+            });
         }
-
-        reply.send(response);
     } catch ( error ) {
         reply.sendError(errors.BAD_REQUEST, error);
     }

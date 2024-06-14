@@ -1,9 +1,8 @@
 import analog from './analog.js';
-import chirpstack from './chirpstack.js';
+//import chirpstack from './chirpstack.js';
 import decoder from './decoder.js';
 import encoder from './encoder.js';
 import mtx from './mtx.js';
-import mtxLora from './mtxLora.js';
 import obisObserver from './obisObserver.js';
 
 
@@ -14,10 +13,9 @@ export default async fastify => {
     });
 
     analog(fastify);
-    chirpstack(fastify);
+    //chirpstack(fastify);
     decoder(fastify);
     encoder(fastify);
     mtx(fastify);
-    mtxLora(fastify);
     obisObserver(fastify);
 };

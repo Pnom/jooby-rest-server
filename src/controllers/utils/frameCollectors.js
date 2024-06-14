@@ -3,24 +3,15 @@ import getEpochSeconds from '../../utils/getEpochSeconds.js';
 import {startCollectorsCleaner} from './collectorsCleaner.js';
 
 
-const frameCollectors = {
-    7: new Map(),
-    8: new Map()
-};
+const frameCollectors = new Map();
 
 
-export const getFrameCollector = ( deviceEUI, dataBits = 8 ) => {
-    const collectors = frameCollectors[dataBits];
-
-    if ( !collectors ) {
-        throw new Error(`Incorrect dataBits value. ${dataBits}`);
-    }
-
-    let collector = collectors.get(deviceEUI);
+export const getFrameCollector = deviceEUI => {
+    let collector = frameCollectors.get(deviceEUI);
 
     if ( !collector ) {
-        collector = new FrameCollector(dataBits);
-        collectors.set(deviceEUI, collector);
+        collector = new FrameCollector();
+        frameCollectors.set(deviceEUI, collector);
         startCollectorsCleaner();
     }
 
@@ -30,11 +21,11 @@ export const getFrameCollector = ( deviceEUI, dataBits = 8 ) => {
 };
 
 export const cleanupFrameCollectors = ( currentTime, ttlPeriod ) => (
-    Object.values(frameCollectors).forEach(collectors => ([...collectors].forEach(
+    [...frameCollectors].forEach(
         ([key, collector]) => {
             if ( collector.isEmpty() || collector.lastAccessTime + ttlPeriod < currentTime ) {
-                collectors.delete(key);
+                frameCollectors.delete(key);
             }
         }
-    )))
+    )
 );

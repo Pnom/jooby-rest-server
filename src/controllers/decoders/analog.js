@@ -1,25 +1,36 @@
 import {decodeAnalogMessage} from './utils/decodeAnalogMessage.js';
-import {HDLC} from '../../constants/framingFormats.js';
+import {fromBytes as frameFromBytes} from '@jooby-dev/jooby-codec/utils/frame.js';
 import decodeFrames from './utils/decodeFrames.js';
-import {prepareCommands, prepareFrame} from '../utils/preparations.js';
+import {HDLC} from '../../constants/framingFormats.js';
+import {prepareCommands} from '../utils/preparations.js';
+import getStringFromBytes from '../../utils/getStringFromBytes.js';
 import errors from '../../errors.js';
 
 
 const decodeMessage = ( bytes, options ) => {
-    const {isValid, commands} = decodeAnalogMessage(bytes, options);
+    const {message} = decodeAnalogMessage(bytes, options);
 
-    return {
-        isValid,
-        commands: prepareCommands(commands, options)
-    };
+    return message;
 };
 
-const decodeFrame = ( frame, options ) => {
-    const message = decodeMessage(frame.content, options);
+const prepareFrame = ( {bytes, payload}, options ) => ({
+    bytes: getStringFromBytes(bytes, options),
+    payload: getStringFromBytes(payload, options)
+});
+
+
+const decodeFrame = ( bytes, options ) => {
+    const frame = frameFromBytes(bytes);
+
+    if ( 'payload' in frame ) {
+        return {
+            ...prepareFrame(frame, options),
+            ...decodeAnalogMessage(frame.payload, options)
+        };
+    }
 
     return {
-        ...prepareFrame(frame, options),
-        message
+        ...prepareFrame(frame, options)
     };
 };
 
@@ -38,7 +49,7 @@ export default function decode ( request, reply ) {
     try {
         const result = framingFormat === HDLC
             ? {frames: decodeFrames(body).map(frame => decodeFrame(frame, body))}
-            : {message: decodeMessage(bytes, body)};
+            : decodeAnalogMessage(bytes, body);
 
         reply.send({
             ...response,

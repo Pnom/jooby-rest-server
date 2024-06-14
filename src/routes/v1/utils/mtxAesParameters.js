@@ -14,7 +14,7 @@ const validateParameters = ( request, reply ) => {
     } = body;
 
     if ( aesKey ) {
-        const bytesAesKey = utils.getBytesFromString(aesKey, bytesConversionFormat);
+        const bytesAesKey = utils.getBytesFromHex(aesKey, bytesConversionFormat);
 
         if ( bytesAesKey.length !== 16 ) {
             reply.sendError(errors.BAD_REQUEST, 'Wrong access key value');

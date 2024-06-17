@@ -1,0 +1,127 @@
+openapi: 3.0.2
+info:
+    title: Jooby codec REST server
+    contact:
+        name: Infomir Support
+        url: https://infomir.com
+        email: support@infomir.com
+    version: '1'
+
+paths:
+    /v1/decoder:
+      post:
+        description: Decode the data
+        requestBody:
+          description: Request to decode data
+          required: true
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DecoderRequest'
+                  - protocol:
+                    required: true,
+                    $ref: '#/components/schemas/protocols'
+        responses:
+          200:
+            description: Result of decoding
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/message'
+components:
+  schemas:
+    DecoderRequest:
+      description: Request to decode data
+      allOf:
+        - $ref: '#/components/schemas/Request'
+        - data:
+          required: true,
+          description: Data to decode. Could be in hex or base64 [format](#/components/schemas/encodingFormat).
+          $ref: '#/components/schemas/data'
+    Request:
+      description: Common fields for encoder and decoder
+      type: object
+      properties:
+        deviceEUI:
+          required: true,
+          $ref: '#/components/schemas/deviceEUI'
+        hardwareType:
+          description: https://jooby-dev.github.io/jooby-codec/modules/analog.constants.hardwareTypes.html
+          type: number
+        direction:
+          $ref: '#/components/schemas/directions'
+        framingFormat:
+          $ref: '#/components/schemas/framingFormat'
+        encodingFormat:
+          $ref: '#/components/schemas/encodingFormat'
+    AnalogCommand:
+      description: Analog command
+      type: object
+      properties:
+        required: true,
+        id: integer
+    AnalogDecoderResponse:
+      description: Decoded data for the analog protocol
+      type: object
+      properties:
+        deviceEUI:
+          required: true,
+          $ref: '#/components/schemas/deviceEUI'
+    deviceEUI:
+      description: device EUI
+      type: string
+      example: 001a79881701b63c
+    message:
+      description: decoded content
+      type: object
+    data:
+      description: Binary data. Could be in hex or base64 [format](#/components/schemas/encodingFormat).
+      type: string
+      example: CQBc
+    protocols:
+      type: string
+      example: analog
+      enum:
+          - analog
+          - obisObserver
+          - mtx
+          - mtxLora
+      description: >
+        Protocol to use.
+          - `analog`: analog protocol
+          - `obisObserver`: obisObserver protocol
+          - `mtx`: mtx protocol
+          - `mtxLora`: mtxLora protocol
+    directions:
+      type: string
+      example: uplink
+      default: auto
+      enum:
+        - downlink
+        - uplink
+        - auto
+      description: >
+        Direction of data transmission.
+          - `downlink`: data flows to a device
+          - `uplink`: data moves from a device
+          - `auto`: transmission direction is automatically determined
+    framingFormat:
+      type: string
+      example: hdlc
+      default: none
+      enum:
+        - none
+        - hdlc
+      description: >
+        Indicates the format of the data.
+          - `hdlc`: data framed in HDLC frame
+          - `none`: data without framing
+    encodingFormat:
+      type: string
+      example: base64
+      default: base64
+      description: >
+        Specifies how the data is encoded.
+          - `hex`: data is encoded in hexadecimal
+          - `base64`: data is base64-encoded

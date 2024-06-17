@@ -1,20 +1,13 @@
-import decode from '../../controllers/decoders/general.js';
-import {validateDecoder} from './utils/generalRequest.js';
+import {validateDecoder} from './validators/general.js';
 import {modifyDecoderRequest} from './utils/modifyRequest.js';
-
-
-const validateRequest = ( request, reply, done ) => {
-    validateDecoder(request, reply);
-
-    done();
-};
+import decode from '../../controllers/decoders/general.js';
 
 
 export default fastify => {
     fastify.post(
         `/decoder`,
         {
-            preValidation: [validateRequest],
+            preValidation: [validateDecoder],
             preHandler: [modifyDecoderRequest]
         },
         decode

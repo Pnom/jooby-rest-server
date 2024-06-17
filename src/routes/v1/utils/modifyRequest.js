@@ -1,27 +1,24 @@
-import {utils} from '@jooby-dev/jooby-codec/index.js';
+import getBytesFromString from '../../../utils/getBytesFromString.js';
 
 
 const modifyRequestBody = body => {
     const {
-        accessLevel,
         aesKey,
         bytesConversionFormat,
         data,
         deviceEUI,
         direction,
         dlms,
-        frame,
         framingFormat,
         hardwareType,
         maxSegmentSize,
-        messageId,
         segmentationSessionId
     } = body;
 
     let aesKeyBytes;
 
     if ( aesKey ) {
-        aesKeyBytes = utils.getBytesFromString(aesKey, bytesConversionFormat);
+        aesKeyBytes = getBytesFromString(aesKey, bytesConversionFormat);
     }
 
     const response = {
@@ -30,23 +27,11 @@ const modifyRequestBody = body => {
         dlms,
         hardwareType,
         bytesConversionFormat,
-        accessLevel,
         framingFormat,
-        messageId,
         segmentationSessionId,
         maxSegmentSize,
         data
     };
-
-    if ( frame ) {
-        const {type, destination, source} = frame;
-
-        response.frame = {type, destination, source};
-
-        if ( frame.messageId ) {
-            response.frame.messageId = frame.messageId;
-        }
-    }
 
     return {
         ...body,
@@ -60,7 +45,7 @@ export const modifyDecoderRequest = ( request, reply, done ) => {
     const body = modifyRequestBody(request.body);
     const {data, bytesConversionFormat} = request.body;
 
-    body.bytes = utils.getBytesFromString(data, bytesConversionFormat);
+    body.bytes = getBytesFromString(data, bytesConversionFormat);
     request.body = body;
 
     done();

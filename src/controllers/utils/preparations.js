@@ -1,22 +1,33 @@
-import {utils} from '@jooby-dev/jooby-codec/index.js';
+import getStringFromBytes from '../../utils/getStringFromBytes.js';
 
 
-const prepareCommand = ( command, options ) => {
-    const {constructor: {id, name}} = command;
-    let result = {id, name};
+const prepareCommand = ( commandsById, command, options ) => {
+    const {id, name} = command;
+    const commandNamespace = commandsById[command.id];
 
-    try {
-        result = {...result, ...JSON.parse(command.toJson(options))};
-        // eslint-disable-next-line no-empty
-    } catch {}
+    const parameters = commandNamespace && 'toJson' in commandNamespace && typeof commandNamespace.toJson === 'function'
+        ? JSON.parse(commandNamespace.toJson(command.parameters, options))
+        : command.parameters;
 
-    return result;
+    return parameters && Object.keys(parameters).length !== 0 ? {id, name, parameters} : {id, name};
 };
 
-export const prepareCommands = ( commands, options ) => commands.map(({command}) => prepareCommand(command, options));
+const prepareCommandWithError = (commandsById, {error, command}, options ) => {
+    const preparedCommand = prepareCommand(commandsById, command, options);
 
-export const prepareFrame = ( {isValid, bytes, content}, options ) => ({
-    isValid,
-    bytes: utils.getStringFromBytes(bytes, options),
-    content: utils.getStringFromBytes(content, options)
+    return command.bytes
+        ? {...preparedCommand, error, data: getStringFromBytes(command.bytes, options)}
+        : {...preparedCommand, error};
+};
+
+export const prepareCommands = ( commandsById, commands, options ) => (
+    commands.map(command => (command.error
+        ? prepareCommandWithError(commandsById, command, options)
+        : prepareCommand(commandsById, command, options)))
+);
+
+export const prepareFrame = ( {header, bytes, payload}, options ) => ({
+    ...header,
+    bytes: getStringFromBytes(bytes, options),
+    payload: getStringFromBytes(payload, options)
 });

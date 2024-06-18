@@ -1,4 +1,4 @@
-import DataSegmentsCollector from '@jooby-dev/jooby-codec/analog/DataSegmentsCollector.js';
+import DataSegmentsCollector from '@jooby-dev/jooby-codec/analog/utils/DataSegmentsCollector.js';
 import getEpochSeconds from '../../utils/getEpochSeconds.js';
 import {startCollectorsCleaner} from './collectorsCleaner.js';
 

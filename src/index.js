@@ -10,7 +10,7 @@ import validateApiKey from './plugins/validateApiKey.js';
 // reply plugins
 import replySendError from './plugins/reply/sendError.js';
 
-import initRoutes from './routes/v1/index.js';
+import initRoutes from './routes/v2/index.js';
 import {stopCollectorsCleaner} from './controllers/utils/collectorsCleaner.js';
 
 
@@ -30,7 +30,7 @@ fastify.register(validateApiKey);
 // reply decorators
 fastify.register(replySendError);
 
-fastify.register(initRoutes, {prefix: 'v1'});
+fastify.register(initRoutes, {prefix: 'v2'});
 
 // Run the server!
 fastify

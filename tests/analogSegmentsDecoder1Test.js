@@ -1,9 +1,7 @@
-import * as constants from '@jooby-dev/jooby-codec/constants/index.js';
+import {HEX, BASE64} from '@jooby-dev/jooby-codec/constants/bytesConversionFormats.js';
+import {DOWNLINK} from '../src/constants/directions.js';
+import {ANALOG} from '../src/constants/protocols.js';
 import {runTestsSequence} from './utils/runTestsSequence.js';
-
-
-const {HEX, BASE64} = constants.bytesConversionFormats;
-const {DOWNLINK} = constants.directions;
 
 
 const tests = [
@@ -20,19 +18,18 @@ const tests = [
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
             data: 'HgkjkSMQEAcAAADU',
-            message: {
-                isValid: true,
-                commands: [{
-                    id: 30,
-                    name: 'DataSegment',
+            commands: [{
+                id: 30,
+                name: 'dataSegment',
+                parameters: {
+                    data: 'IxAQBwAAAA==',
+                    payload: 'IxAQBwAAAA==',
                     segmentationSessionId: 35,
                     segmentIndex: 1,
                     segmentsNumber: 1,
-                    isLast: true,
-                    data: 'IxAQBwAAAA==',
-                    assembledData: 'IxAQBwAAAA=='
-                }]
-            }
+                    isLast: true
+                }
+            }]
         }
     },
     {
@@ -46,19 +43,18 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             data: '1e09239123101007000000d4',
-            message: {
-                isValid: true,
-                commands: [{
-                    id: 30,
-                    name: 'DataSegment',
+            commands: [{
+                id: 30,
+                name: 'dataSegment',
+                parameters: {
+                    data: '23101007000000',
+                    payload: '23101007000000',
                     segmentationSessionId: 35,
                     segmentIndex: 1,
                     segmentsNumber: 1,
-                    isLast: true,
-                    data: '23101007000000',
-                    assembledData: '23101007000000'
-                }]
-            }
+                    isLast: true
+                }
+            }]
         }
     },
     {
@@ -74,26 +70,25 @@ const tests = [
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
             data: '1e09239123101007000000d4',
-            message: {
-                isValid: true,
-                commands: [{
-                    id: 30,
-                    name: 'DataSegment',
+            commands: [{
+                id: 30,
+                name: 'dataSegment',
+                parameters: {
+                    data: '23101007000000',
+                    payload: '23101007000000',
                     segmentationSessionId: 35,
                     segmentIndex: 1,
                     segmentsNumber: 1,
-                    isLast: true,
-                    data: '23101007000000',
-                    assembledData: '23101007000000'
-                }]
-            }
+                    isLast: true
+                }
+            }]
         }
     }
 ];
 
 const routes = [
-    {url: '/v1/decoder/analog'},
-    {url: '/v1/decoder', requestExtension: {protocol: 'analog'}}
+    {url: `/v2/decoder/${ANALOG}`},
+    {url: '/v2/decoder', requestExtension: {protocol: ANALOG}}
 ];
 
 runTestsSequence('analog segments decoder (simple)', routes, tests);

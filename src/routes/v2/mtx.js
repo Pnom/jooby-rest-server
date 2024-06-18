@@ -2,25 +2,43 @@ import {validateDecoder, validateEncoder} from './validators/mtx.js';
 import {modifyDecoderRequest, modifyEncoderRequest} from './utils/modifyRequest.js';
 import decode from '../../controllers/decoders/mtx.js';
 import encode from '../../controllers/encoders/mtx.js';
-import {MTX} from '../../constants/protocols.js';
+import {MTX, MTX3} from '../../constants/protocols.js';
 
 
-export default fastify => {
+const registerRoute = ( fastify, protocol ) => {
+    const addProtocolToBody = ( request, reply, done ) => {
+        request.body.protocol = protocol;
+
+        done();
+    };
+
     fastify.post(
-        `/decoder/${MTX}`,
+        `/decoder/${protocol}`,
         {
-            preValidation: [validateDecoder],
+            preValidation: [
+                addProtocolToBody,
+                validateDecoder
+            ],
             preHandler: [modifyDecoderRequest]
         },
         decode
     );
 
     fastify.post(
-        `/encoder/${MTX}`,
+        `/encoder/${protocol}`,
         {
-            preValidation: [validateEncoder],
+            preValidation: [
+                addProtocolToBody,
+                validateEncoder
+            ],
             preHandler: [modifyEncoderRequest]
         },
         encode
     );
+};
+
+
+export default fastify => {
+    registerRoute(fastify, MTX);
+    registerRoute(fastify, MTX3);
 };

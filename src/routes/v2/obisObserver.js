@@ -1,38 +1,24 @@
+import {validateDecoder, validateEncoder} from './validators/obisObserver.js';
+import {modifyDecoderRequest, modifyEncoderRequest} from './utils/modifyRequest.js';
 import decode from '../../controllers/decoders/obisObserver.js';
 import encode from '../../controllers/encoders/obisObserver.js';
-import {validateDecoder, validateEncoder} from './utils/request.js';
-import {modifyDecoderRequest, modifyEncoderRequest} from './utils/modifyRequest.js';
-
-
-const resource = 'obisObserver';
-
-const validateObisObserverDecoderRequest = ( request, reply, done ) => {
-    validateDecoder(request, reply);
-
-    done();
-};
-
-const validateObisObserverEncoderRequest = ( request, reply, done ) => {
-    validateEncoder(request, reply);
-
-    done();
-};
+import {OBIS_OBSERVER} from '../../constants/protocols.js';
 
 
 export default fastify => {
     fastify.post(
-        `/decoder/${resource}`,
+        `/decoder/${OBIS_OBSERVER}`,
         {
-            preValidation: [validateObisObserverDecoderRequest],
+            preValidation: [validateDecoder],
             preHandler: [modifyDecoderRequest]
         },
         decode
     );
 
     fastify.post(
-        `/encoder/${resource}`,
+        `/encoder/${OBIS_OBSERVER}`,
         {
-            preValidation: [validateObisObserverEncoderRequest],
+            preValidation: [validateEncoder],
             preHandler: [modifyEncoderRequest]
         },
         encode

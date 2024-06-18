@@ -1,39 +1,24 @@
+import {validateDecoder, validateEncoder} from './validators/mtx.js';
+import {modifyDecoderRequest, modifyEncoderRequest} from './utils/modifyRequest.js';
 import decode from '../../controllers/decoders/mtx.js';
 import encode from '../../controllers/encoders/mtx.js';
-import * as mtxRequest from './utils/mtxRequest.js';
-import {modifyDecoderRequest, modifyEncoderRequest} from './utils/modifyRequest.js';
-
-
-const resource = 'mtx';
-
-
-const validateDecoderRequest = ( request, reply, done ) => {
-    mtxRequest.validateDecoder(request, reply);
-
-    done();
-};
-
-const validateEncoderRequest = ( request, reply, done ) => {
-    mtxRequest.validateEncoder(request, reply, done);
-
-    done();
-};
+import {MTX} from '../../constants/protocols.js';
 
 
 export default fastify => {
     fastify.post(
-        `/decoder/${resource}`,
+        `/decoder/${MTX}`,
         {
-            preValidation: [validateDecoderRequest],
+            preValidation: [validateDecoder],
             preHandler: [modifyDecoderRequest]
         },
         decode
     );
 
     fastify.post(
-        `/encoder/${resource}`,
+        `/encoder/${MTX}`,
         {
-            preValidation: [validateEncoderRequest],
+            preValidation: [validateEncoder],
             preHandler: [modifyEncoderRequest]
         },
         encode

@@ -1,15 +1,9 @@
 import errors from '../../errors.js';
-import {analog, utils} from '@jooby-dev/jooby-codec/index.js';
-import * as Frame from '@jooby-dev/jooby-codec/utils/frame.js';
-import {requestById, responseById} from '@jooby-dev/jooby-codec/analog/constants/commandRelations.js';
+import * as frame from '@jooby-dev/jooby-codec/utils/frame.js';
+import {downlink, uplink} from '@jooby-dev/jooby-codec/analog/message/index.js';
 import {HDLC} from '../../constants/framingFormats.js';
-
-
-const constructCommand = command => {
-    const constructor = requestById.get(command.id) || responseById.get(command.id);
-
-    return new constructor(command);
-};
+import getStringFromBytes from '../../utils/getStringFromBytes.js';
+import * as directions from '../../constants/directions.js';
 
 
 /**
@@ -18,23 +12,21 @@ const constructCommand = command => {
 export default function encode ( {body}, reply ) {
     try {
         const {
+            direction,
             framingFormat,
-            frame,
-            bytesConversionFormat,
+            commands,
             response
         } = body;
 
-        const {commands} = framingFormat === HDLC ? frame : body;
-
-        let bytes = analog.message.toBytes(commands.map(constructCommand));
+        let bytes = direction === directions.DOWNLINK
+            ? downlink.toBytes(commands)
+            : uplink.toBytes(commands);
 
         if ( framingFormat === HDLC ) {
-            bytes = Frame.toFrame(bytes).bytes;
-            response.frame.data = utils.getStringFromBytes(bytes, {bytesConversionFormat});
-        } else {
-            response.data = utils.getStringFromBytes(bytes, {bytesConversionFormat});
+            bytes = frame.toBytes(bytes);
         }
 
+        response.data = getStringFromBytes(bytes, body);
         reply.send(response);
     } catch ( error ) {
         reply.sendError(errors.BAD_REQUEST, error);

@@ -1,13 +1,11 @@
-import {mtx, utils} from '@jooby-dev/jooby-codec/index.js';
-import {requestById, responseById} from '@jooby-dev/jooby-codec/mtx/constants/commandRelations.js';
+import {downlink, uplink} from '@jooby-dev/jooby-codec/mtx/message/index.js';
+import * as frame from '@jooby-dev/jooby-codec/mtx/utils/frame.js';
+import {accessLevels} from '@jooby-dev/jooby-codec/mtx/constants/index.js';
 import {HDLC} from '../../constants/framingFormats.js';
+import * as directions from '../../constants/directions.js';
+import encodeAnalogDataSegments from './utils/encodeAnalogDataSegments.js';
+import getStringFromBytes from '../../utils/getStringFromBytes.js';
 import errors from '../../errors.js';
-
-const constructCommand = command => {
-    const constructor = requestById.get(command.id) || responseById.get(command.id);
-
-    return new constructor(command);
-};
 
 
 /**
@@ -16,26 +14,24 @@ const constructCommand = command => {
 export default function encode ( {body}, reply ) {
     try {
         const {
-            accessLevel,
+            message: {id: messageId = 0, commands, accessLevel = accessLevels.UNENCRYPTED},
+            direction,
             aesKeyBytes,
+            header,
             framingFormat,
-            frame,
-            bytesConversionFormat,
             response
         } = body;
 
-        const {commands, messageId} = framingFormat === HDLC ? frame : body;
+        const bytes = direction === directions.DOWNLINK
+            ? downlink.toBytes(commands, {messageId, accessLevel, aesKey: aesKeyBytes})
+            : uplink.toBytes(commands, {messageId, accessLevel, aesKey: aesKeyBytes});
 
-        let bytes = mtx.message.toBytes(commands.map(constructCommand), {messageId, accessLevel, aesKey: aesKeyBytes});
-
-        if ( framingFormat === HDLC ) {
-            bytes = mtx.message.toFrame(bytes, frame);
-            response.frame.data = utils.getStringFromBytes(bytes, {bytesConversionFormat});
-        } else {
-            response.data = utils.getStringFromBytes(bytes, {bytesConversionFormat});
-        }
-
-        reply.send(response);
+        reply.send({
+            ...response,
+            data: framingFormat === HDLC
+                ? getStringFromBytes(frame.toBytes(bytes, header), body)
+                : encodeAnalogDataSegments(bytes, body)
+        });
     } catch ( error ) {
         reply.sendError(errors.BAD_REQUEST, error);
     }

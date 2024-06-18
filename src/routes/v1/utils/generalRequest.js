@@ -1,6 +1,5 @@
 import * as baseRequest from './request.js';
 import * as mtxRequest from './mtxRequest.js';
-import * as mtxLoraRequest from './mtxLoraRequest.js';
 import * as protocols from '../../../constants/protocols.js';
 import errors from '../../../errors.js';
 
@@ -27,10 +26,6 @@ export const validateDecoder = ( request, reply ) => {
 
     if ( protocol === protocols.MTX ) {
         return mtxRequest.validateDecoder(request, reply);
-    }
-
-    if ( protocol === protocols.MTX_LORA ) {
-        return mtxLoraRequest.validateDecoder(request, reply);
     }
 
     return true;

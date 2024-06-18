@@ -1,4 +1,4 @@
-import {utils} from '@jooby-dev/jooby-codec/index.js';
+import getBytesFromString from '../../../utils/getBytesFromString.js';
 
 
 const modifyRequestBody = body => {
@@ -21,7 +21,7 @@ const modifyRequestBody = body => {
     let aesKeyBytes;
 
     if ( aesKey ) {
-        aesKeyBytes = utils.getBytesFromString(aesKey, bytesConversionFormat);
+        aesKeyBytes = getBytesFromString(aesKey, bytesConversionFormat);
     }
 
     const response = {
@@ -60,7 +60,7 @@ export const modifyDecoderRequest = ( request, reply, done ) => {
     const body = modifyRequestBody(request.body);
     const {data, bytesConversionFormat} = request.body;
 
-    body.bytes = utils.getBytesFromString(data, bytesConversionFormat);
+    body.bytes = getBytesFromString(data, bytesConversionFormat);
     request.body = body;
 
     done();

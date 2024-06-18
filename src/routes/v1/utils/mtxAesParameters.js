@@ -1,4 +1,5 @@
-import {mtx, utils} from '@jooby-dev/jooby-codec/index.js';
+import {mtx} from '@jooby-dev/jooby-codec/index.js';
+import getBytesFromString from '../../../utils/getBytesFromString.js';
 import errors from '../../../errors.js';
 
 
@@ -14,7 +15,7 @@ const validateParameters = ( request, reply ) => {
     } = body;
 
     if ( aesKey ) {
-        const bytesAesKey = utils.getBytesFromString(aesKey, bytesConversionFormat);
+        const bytesAesKey = getBytesFromString(aesKey, bytesConversionFormat);
 
         if ( bytesAesKey.length !== 16 ) {
             reply.sendError(errors.BAD_REQUEST, 'Wrong access key value');

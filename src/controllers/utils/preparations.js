@@ -1,5 +1,4 @@
-import {utils} from '@jooby-dev/jooby-codec/index.js';
-
+import getStringFromBytes from '../../utils/getStringFromBytes.js';
 
 const prepareCommand = ( command, options ) => {
     const {constructor: {id, name}} = command;
@@ -17,6 +16,6 @@ export const prepareCommands = ( commands, options ) => commands.map(({command})
 
 export const prepareFrame = ( {isValid, bytes, content}, options ) => ({
     isValid,
-    bytes: utils.getStringFromBytes(bytes, options),
-    content: utils.getStringFromBytes(content, options)
+    bytes: getStringFromBytes(bytes, options),
+    content: getStringFromBytes(content, options)
 });

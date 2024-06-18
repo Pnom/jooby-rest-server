@@ -3,18 +3,15 @@ import getBytesFromString from '../../../utils/getBytesFromString.js';
 
 const modifyRequestBody = body => {
     const {
-        accessLevel,
         aesKey,
         bytesConversionFormat,
         data,
         deviceEUI,
         direction,
         dlms,
-        frame,
         framingFormat,
         hardwareType,
         maxSegmentSize,
-        messageId,
         segmentationSessionId
     } = body;
 
@@ -30,23 +27,11 @@ const modifyRequestBody = body => {
         dlms,
         hardwareType,
         bytesConversionFormat,
-        accessLevel,
         framingFormat,
-        messageId,
         segmentationSessionId,
         maxSegmentSize,
         data
     };
-
-    if ( frame ) {
-        const {type, destination, source} = frame;
-
-        response.frame = {type, destination, source};
-
-        if ( frame.messageId ) {
-            response.frame.messageId = frame.messageId;
-        }
-    }
 
     return {
         ...body,

@@ -1,5 +1,6 @@
 import * as constants from '@jooby-dev/jooby-codec/constants/index.js';
 import {HDLC} from '../src/constants/framingFormats.js';
+import {OBIS_OBSERVER} from '../src/constants/protocols.js';
 import {runTestsSequence} from './utils/runTestsSequence.js';
 
 
@@ -15,8 +16,9 @@ const tests = [
             commands: [
                 {
                     id: 5,
-                    name: 'DOWN_GET_OBSERVER_UPTIME',
-                    requestId: 2
+                    parameters: {
+                        requestId: 2
+                    }
                 }
 
             ]
@@ -34,10 +36,10 @@ const tests = [
             commands: [
                 {
                     id: 5,
-                    name: 'DOWN_GET_OBSERVER_UPTIME',
-                    requestId: 2
+                    parameters: {
+                        requestId: 2
+                    }
                 }
-
             ]
         },
         response: {
@@ -53,10 +55,10 @@ const tests = [
             commands: [
                 {
                     id: 5,
-                    name: 'DOWN_GET_OBSERVER_UPTIME',
-                    requestId: 2
+                    parameters: {
+                        requestId: 2
+                    }
                 }
-
             ]
         },
         response: {
@@ -71,24 +73,20 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             bytesConversionFormat: HEX,
             framingFormat: HDLC,
-            frame: {
-                commands: [
-                    {
-                        id: 5,
-                        name: 'DOWN_GET_OBSERVER_UPTIME',
+            commands: [
+                {
+                    id: 5,
+                    parameters: {
                         requestId: 2
                     }
-
-                ]
-            }
+                }
+            ]
         },
         response: {
             deviceEUI: '001a79881701b63c',
             bytesConversionFormat: HEX,
             framingFormat: HDLC,
-            frame: {
-                data: '7e050102bbc57e'
-            }
+            data: '7e0501027c3b7c457e'
         }
     },
     {
@@ -96,23 +94,19 @@ const tests = [
         request: {
             deviceEUI: '001a79881701b63c',
             framingFormat: HDLC,
-            frame: {
-                commands: [
-                    {
-                        id: 5,
-                        name: 'DOWN_GET_OBSERVER_UPTIME',
+            commands: [
+                {
+                    id: 5,
+                    parameters: {
                         requestId: 2
                     }
-
-                ]
-            }
+                }
+            ]
         },
         response: {
             deviceEUI: '001a79881701b63c',
             framingFormat: HDLC,
-            frame: {
-                data: '7e050102bbc57e'
-            }
+            data: '7e0501027c3b7c457e'
         }
     },
     {
@@ -121,31 +115,27 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             bytesConversionFormat: BASE64,
             framingFormat: HDLC,
-            frame: {
-                commands: [
-                    {
-                        id: 5,
-                        name: 'DOWN_GET_OBSERVER_UPTIME',
+            commands: [
+                {
+                    id: 5,
+                    parameters: {
                         requestId: 2
                     }
-
-                ]
-            }
+                }
+            ]
         },
         response: {
             deviceEUI: '001a79881701b63c',
             bytesConversionFormat: BASE64,
             framingFormat: HDLC,
-            frame: {
-                data: 'fgUBArvFfg=='
-            }
+            data: 'fgUBAnw7fEV+'
         }
     }
 ];
 
 const routes = [
-    {url: '/v1/encoder/obisObserver'},
-    {url: '/v1/encoder', requestExtension: {protocol: 'obisObserver'}}
+    {url: `/v2/encoder/${OBIS_OBSERVER}`},
+    {url: '/v2/encoder', requestExtension: {protocol: OBIS_OBSERVER}}
 ];
 
 

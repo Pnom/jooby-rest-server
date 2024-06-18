@@ -1,9 +1,7 @@
-import * as constants from '@jooby-dev/jooby-codec/constants/index.js';
+import {HEX, BASE64} from '@jooby-dev/jooby-codec/constants/bytesConversionFormats.js';
 import {HDLC} from '../src/constants/framingFormats.js';
+import {OBIS_OBSERVER} from '../src/constants/protocols.js';
 import {runTestsSequence} from './utils/runTestsSequence.js';
-
-
-const {HEX, BASE64} = constants.bytesConversionFormats;
 
 
 const tests = [
@@ -21,12 +19,14 @@ const tests = [
             data: '04050108080001',
             commands: [{
                 id: 4,
-                name: 'GetObserverCapabilitiesResponse',
-                requestId: 1,
-                maxMeterProfilesNumber: 8,
-                maxMetersNumber: 8,
-                maxObisProfilesNumber: 0,
-                isMultiModeSupported: true
+                name: 'getObserverCapabilities',
+                parameters: {
+                    requestId: 1,
+                    maxMeterProfilesNumber: 8,
+                    maxMetersNumber: 8,
+                    maxObisProfilesNumber: 0,
+                    isMultiModeSupported: true
+                }
             }]
         }
     },
@@ -41,12 +41,14 @@ const tests = [
             data: '04050108080001',
             commands: [{
                 id: 4,
-                name: 'GetObserverCapabilitiesResponse',
-                requestId: 1,
-                maxMeterProfilesNumber: 8,
-                maxMetersNumber: 8,
-                maxObisProfilesNumber: 0,
-                isMultiModeSupported: true
+                name: 'getObserverCapabilities',
+                parameters: {
+                    requestId: 1,
+                    maxMeterProfilesNumber: 8,
+                    maxMetersNumber: 8,
+                    maxObisProfilesNumber: 0,
+                    isMultiModeSupported: true
+                }
             }]
         }
     },
@@ -63,12 +65,14 @@ const tests = [
             data: 'BAUBCAgAAQ==',
             commands: [{
                 id: 4,
-                name: 'GetObserverCapabilitiesResponse',
-                requestId: 1,
-                maxMeterProfilesNumber: 8,
-                maxMetersNumber: 8,
-                maxObisProfilesNumber: 0,
-                isMultiModeSupported: true
+                name: 'getObserverCapabilities',
+                parameters: {
+                    requestId: 1,
+                    maxMeterProfilesNumber: 8,
+                    maxMetersNumber: 8,
+                    maxObisProfilesNumber: 0,
+                    isMultiModeSupported: true
+                }
             }]
         }
     },
@@ -86,17 +90,18 @@ const tests = [
             framingFormat: HDLC,
             data: '7e04050108080001567c4e7e',
             frames: [{
-                isValid: true,
-                bytes: '7e04050108080001567c4e7e',
-                content: '04050108080001',
+                data: '7e04050108080001567c4e7e',
+                payload: '04050108080001',
                 commands: [{
                     id: 4,
-                    name: 'GetObserverCapabilitiesResponse',
-                    requestId: 1,
-                    maxMeterProfilesNumber: 8,
-                    maxMetersNumber: 8,
-                    maxObisProfilesNumber: 0,
-                    isMultiModeSupported: true
+                    name: 'getObserverCapabilities',
+                    parameters: {
+                        requestId: 1,
+                        maxMeterProfilesNumber: 8,
+                        maxMetersNumber: 8,
+                        maxObisProfilesNumber: 0,
+                        isMultiModeSupported: true
+                    }
                 }]
             }]
         }
@@ -113,17 +118,18 @@ const tests = [
             framingFormat: HDLC,
             data: '7e04050108080001567c4e7e',
             frames: [{
-                isValid: true,
-                bytes: '7e04050108080001567c4e7e',
-                content: '04050108080001',
+                data: '7e04050108080001567c4e7e',
+                payload: '04050108080001',
                 commands: [{
                     id: 4,
-                    name: 'GetObserverCapabilitiesResponse',
-                    requestId: 1,
-                    maxMeterProfilesNumber: 8,
-                    maxMetersNumber: 8,
-                    maxObisProfilesNumber: 0,
-                    isMultiModeSupported: true
+                    name: 'getObserverCapabilities',
+                    parameters: {
+                        requestId: 1,
+                        maxMeterProfilesNumber: 8,
+                        maxMetersNumber: 8,
+                        maxObisProfilesNumber: 0,
+                        isMultiModeSupported: true
+                    }
                 }]
             }]
         }
@@ -142,17 +148,18 @@ const tests = [
             framingFormat: HDLC,
             data: 'fgQFAQgIAAFWfE5+',
             frames: [{
-                isValid: true,
-                bytes: 'fgQFAQgIAAFWfE5+',
-                content: 'BAUBCAgAAQ==',
+                data: 'fgQFAQgIAAFWfE5+',
+                payload: 'BAUBCAgAAQ==',
                 commands: [{
                     id: 4,
-                    name: 'GetObserverCapabilitiesResponse',
-                    requestId: 1,
-                    maxMeterProfilesNumber: 8,
-                    maxMetersNumber: 8,
-                    maxObisProfilesNumber: 0,
-                    isMultiModeSupported: true
+                    name: 'getObserverCapabilities',
+                    parameters: {
+                        requestId: 1,
+                        maxMeterProfilesNumber: 8,
+                        maxMetersNumber: 8,
+                        maxObisProfilesNumber: 0,
+                        isMultiModeSupported: true
+                    }
                 }]
             }]
         }
@@ -160,8 +167,8 @@ const tests = [
 ];
 
 const routes = [
-    {url: '/v1/decoder/obisObserver'},
-    {url: '/v1/decoder', requestExtension: {protocol: 'obisObserver'}}
+    {url: `/v2/decoder/${OBIS_OBSERVER}`},
+    {url: '/v2/decoder', requestExtension: {protocol: OBIS_OBSERVER}}
 ];
 
 

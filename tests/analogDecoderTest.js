@@ -1,10 +1,8 @@
-import * as constants from '@jooby-dev/jooby-codec/constants/index.js';
+import {HEX, BASE64} from '@jooby-dev/jooby-codec/constants/bytesConversionFormats.js';
 import {HDLC} from '../src/constants/framingFormats.js';
+import {DOWNLINK} from '../src/constants/directions.js';
+import {ANALOG} from '../src/constants/protocols.js';
 import {runTestsSequence} from './utils/runTestsSequence.js';
-
-
-const {HEX, BASE64} = constants.bytesConversionFormats;
-const {DOWNLINK} = constants.directions;
 
 
 const tests = [
@@ -21,13 +19,10 @@ const tests = [
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
             data: '1f020048',
-            message: {
-                isValid: true,
-                commands: [{
-                    id: 543,
-                    name: 'GetLmicInfo'
-                }]
-            }
+            commands: [{
+                id: 543,
+                name: 'getLmicInfo'
+            }]
         }
     },
     {
@@ -41,13 +36,10 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             data: '1f020048',
-            message: {
-                isValid: true,
-                commands: [{
-                    id: 543,
-                    name: 'GetLmicInfo'
-                }]
-            }
+            commands: [{
+                id: 543,
+                name: 'getLmicInfo'
+            }]
         }
     },
     {
@@ -63,39 +55,34 @@ const tests = [
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
             data: 'HwIASA==',
-            message: {
-                isValid: true,
-                commands: [{
-                    id: 543,
-                    name: 'GetLmicInfo'
-                }]
-            }
+            commands: [{
+                id: 543,
+                name: 'getLmicInfo'
+            }]
         }
     },
     {
         name: 'hdlc frame, hex bytes format',
         request: {
             deviceEUI: '001a79881701b63c',
+            direction: DOWNLINK,
             bytesConversionFormat: HEX,
             framingFormat: HDLC,
             data: '7e1f02004872f67e'
         },
         response: {
             deviceEUI: '001a79881701b63c',
+            direction: DOWNLINK,
             bytesConversionFormat: HEX,
             framingFormat: HDLC,
             data: '7e1f02004872f67e',
             frames: [{
-                isValid: true,
-                bytes: '7e1f02004872f67e',
-                content: '1f020048',
-                message: {
-                    isValid: true,
-                    commands: [{
-                        id: 543,
-                        name: 'GetLmicInfo'
-                    }]
-                }
+                data: '7e1f02004872f67e',
+                payload: '1f020048',
+                commands: [{
+                    id: 543,
+                    name: 'getLmicInfo'
+                }]
             }]
         }
     },
@@ -103,24 +90,22 @@ const tests = [
         name: 'hdlc frame, default bytes format',
         request: {
             deviceEUI: '001a79881701b63c',
+            direction: DOWNLINK,
             framingFormat: HDLC,
             data: '7e1f02004872f67e'
         },
         response: {
             deviceEUI: '001a79881701b63c',
+            direction: DOWNLINK,
             framingFormat: HDLC,
             data: '7e1f02004872f67e',
             frames: [{
-                isValid: true,
-                bytes: '7e1f02004872f67e',
-                content: '1f020048',
-                message: {
-                    isValid: true,
-                    commands: [{
-                        id: 543,
-                        name: 'GetLmicInfo'
-                    }]
-                }
+                data: '7e1f02004872f67e',
+                payload: '1f020048',
+                commands: [{
+                    id: 543,
+                    name: 'getLmicInfo'
+                }]
             }]
         }
     },
@@ -128,34 +113,32 @@ const tests = [
         name: 'hdlc frame, base64 bytes format',
         request: {
             deviceEUI: '001a79881701b63c',
+            direction: DOWNLINK,
             bytesConversionFormat: BASE64,
             framingFormat: HDLC,
             data: 'fh8CAEhy9n4='
         },
         response: {
             deviceEUI: '001a79881701b63c',
+            direction: DOWNLINK,
             bytesConversionFormat: BASE64,
             framingFormat: HDLC,
             data: 'fh8CAEhy9n4=',
             frames: [{
-                isValid: true,
-                bytes: 'fh8CAEhy9n4=',
-                content: 'HwIASA==',
-                message: {
-                    isValid: true,
-                    commands: [{
-                        id: 543,
-                        name: 'GetLmicInfo'
-                    }]
-                }
+                data: 'fh8CAEhy9n4=',
+                payload: 'HwIASA==',
+                commands: [{
+                    id: 543,
+                    name: 'getLmicInfo'
+                }]
             }]
         }
     }
 ];
 
 const routes = [
-    {url: '/v1/decoder/analog'},
-    {url: '/v1/decoder', requestExtension: {protocol: 'analog'}}
+    {url: `/v2/decoder/${ANALOG}`},
+    {url: '/v2/decoder', requestExtension: {protocol: ANALOG}}
 ];
 
 

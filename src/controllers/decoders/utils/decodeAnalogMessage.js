@@ -1,26 +1,32 @@
-import {analog, utils} from '@jooby-dev/jooby-codec/index.js';
-import DataSegment from '@jooby-dev/jooby-codec/analog/commands/DataSegmentBase.js';
+import * as messages from '@jooby-dev/jooby-codec/analog/message/index.js';
+import {downlinkById, uplinkById} from '@jooby-dev/jooby-codec/analog/commands/index.js';
+import * as dataSegment from '@jooby-dev/jooby-codec/analog/commands/downlink/dataSegment.js';
 import {getSegmentCollector, removeSegmentCollector} from '../../utils/segmentCollectors.js';
+import * as directions from '../../../constants/directions.js';
+import {prepareCommands} from '../../utils/preparations.js';
+import getStringFromBytes from '../../../utils/getStringFromBytes.js';
 
 
 export const decodeAnalogMessage = ( bytes, options ) => {
-    const {message} = analog;
-    const {deviceEUI} = options;
-    const {commands, isValid} = message.fromBytes(bytes, options);
-    const assembledDataArray = [];
+    const {direction, deviceEUI} = options;
+    const message = direction === directions.DOWNLINK
+        ? messages.downlink.fromBytes(bytes, options)
+        : messages.uplink.fromBytes(bytes, options);
+    const {commands} = message;
+    const payloadArray = [];
 
     for ( let index = 0; index < commands.length; index++ ) {
-        const {command} = commands[index];
+        const command = commands[index];
 
-        if ( command instanceof DataSegment ) {
+        if ( command.id === dataSegment.id ) {
             const collector = getSegmentCollector(deviceEUI);
-            const assembledData = collector.push(command.parameters);
+            const payload = collector.push(command.parameters);
 
-            if ( assembledData.length !== 0 ) {
-                command.parameters.assembledData = utils.getStringFromBytes(assembledData, options);
-                assembledDataArray.push({
+            if ( payload.length !== 0 ) {
+                command.parameters.payload = getStringFromBytes(payload, options);
+                payloadArray.push({
                     segmentationSessionId: command.parameters.segmentationSessionId,
-                    data: assembledData
+                    data: payload
                 });
 
                 removeSegmentCollector(deviceEUI);
@@ -28,14 +34,13 @@ export const decodeAnalogMessage = ( bytes, options ) => {
         }
     }
 
-    const result = {
-        isValid,
-        commands
-    };
+    const preparedCommands = prepareCommands(
+        direction === directions.DOWNLINK ? downlinkById : uplinkById,
+        commands,
+        options
+    );
 
-    if ( assembledDataArray.length !== 0 ) {
-        result.assembledData = assembledDataArray;
-    }
-
-    return result;
+    return payloadArray.length === 0
+        ? {commands: preparedCommands}
+        : {commands: preparedCommands, payload: payloadArray};
 };

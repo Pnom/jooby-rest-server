@@ -1,12 +1,9 @@
-import {mtx} from '@jooby-dev/jooby-codec/index.js';
-import * as constants from '@jooby-dev/jooby-codec/constants/index.js';
+import {HEX, BASE64} from '@jooby-dev/jooby-codec/constants/bytesConversionFormats.js';
+import {READ_ONLY, UNENCRYPTED} from '@jooby-dev/jooby-codec/mtx/constants/accessLevels.js';
 import {HDLC} from '../src/constants/framingFormats.js';
+import {DOWNLINK} from '../src/constants/directions.js';
+import {MTX} from '../src/constants/protocols.js';
 import {runTestsSequence} from './utils/runTestsSequence.js';
-
-
-const {READ_ONLY, UNENCRYPTED} = mtx.constants.accessLevels;
-const {HEX, BASE64} = constants.bytesConversionFormats;
-const {DOWNLINK} = constants.directions;
 
 
 const tests = [
@@ -16,21 +13,23 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
-            accessLevel: UNENCRYPTED,
-            messageId: 1,
-            commands: [
-                {
-                    id: 7
-                }
-            ]
+            segmentationSessionId: 0,
+            message: {
+                id: 1,
+                accessLevel: UNENCRYPTED,
+                commands: [
+                    {
+                        id: 7
+                    }
+                ]
+            }
         },
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
-            accessLevel: UNENCRYPTED,
-            messageId: 1,
-            data: '01101007000042'
+            segmentationSessionId: 0,
+            data: ['1e0900910110100700004297']
         }
     },
     {
@@ -38,20 +37,22 @@ const tests = [
         request: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: UNENCRYPTED,
-            messageId: 1,
-            commands: [
-                {
-                    id: 7
-                }
-            ]
+            segmentationSessionId: 0,
+            message: {
+                id: 1,
+                accessLevel: UNENCRYPTED,
+                commands: [
+                    {
+                        id: 7
+                    }
+                ]
+            }
         },
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: UNENCRYPTED,
-            messageId: 1,
-            data: '01101007000042'
+            segmentationSessionId: 0,
+            data: ['1e0900910110100700004297']
         }
     },
     {
@@ -60,21 +61,23 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: UNENCRYPTED,
-            messageId: 1,
-            commands: [
-                {
-                    id: 7
-                }
-            ]
+            segmentationSessionId: 0,
+            message: {
+                id: 1,
+                accessLevel: UNENCRYPTED,
+                commands: [
+                    {
+                        id: 7
+                    }
+                ]
+            }
         },
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: UNENCRYPTED,
-            messageId: 1,
-            data: 'ARAQBwAAQg=='
+            segmentationSessionId: 0,
+            data: ['HgkAkQEQEAcAAEKX']
         }
     },
     {
@@ -85,8 +88,8 @@ const tests = [
             bytesConversionFormat: HEX,
             accessLevel: UNENCRYPTED,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
+            message: {
+                id: 1,
                 commands: [
                     {
                         id: 7
@@ -98,12 +101,8 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
-            accessLevel: UNENCRYPTED,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
-                data: '7e50fffffffe01101007000042f8427e'
-            }
+            data: '7e50fffffffe01101007000042f8427e'
         }
     },
     {
@@ -111,10 +110,10 @@ const tests = [
         request: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: UNENCRYPTED,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
+            message: {
+                id: 1,
+                accessLevel: UNENCRYPTED,
                 commands: [
                     {
                         id: 7
@@ -125,12 +124,8 @@ const tests = [
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: UNENCRYPTED,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
-                data: '7e50fffffffe01101007000042f8427e'
-            }
+            data: '7e50fffffffe01101007000042f8427e'
         }
     },
     {
@@ -139,10 +134,10 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: UNENCRYPTED,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
+            message: {
+                id: 1,
+                accessLevel: UNENCRYPTED,
                 commands: [
                     {
                         id: 7
@@ -154,12 +149,8 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: UNENCRYPTED,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
-                data: 'flD////+ARAQBwAAQvhCfg=='
-            }
+            data: 'flD////+ARAQBwAAQvhCfg=='
         }
     },
     {
@@ -168,22 +159,24 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: READ_ONLY,
+            segmentationSessionId: 0,
             aesKey: 'AAECAwQFBgcICQoLDA0ODw==',
-            messageId: 1,
-            commands: [
-                {
-                    id: 7
-                }
-            ]
+            message: {
+                id: 1,
+                accessLevel: READ_ONLY,
+                commands: [
+                    {
+                        id: 7
+                    }
+                ]
+            }
         },
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: READ_ONLY,
-            messageId: 1,
-            data: 'ARNHBKbl5jcBrTel1XGSFDxS'
+            segmentationSessionId: 0,
+            data: ['HhQAkQETRwSm5eY3Aa03pdVxkhQ8Un8=']
         }
     },
     {
@@ -191,21 +184,23 @@ const tests = [
         request: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: READ_ONLY,
+            segmentationSessionId: 0,
             aesKey: '000102030405060708090a0b0c0d0e0f',
-            messageId: 1,
-            commands: [
-                {
-                    id: 7
-                }
-            ]
+            message: {
+                id: 1,
+                accessLevel: READ_ONLY,
+                commands: [
+                    {
+                        id: 7
+                    }
+                ]
+            }
         },
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: READ_ONLY,
-            messageId: 1,
-            data: '01134704a6e5e63701ad37a5d57192143c52'
+            segmentationSessionId: 0,
+            data: ['1e14009101134704a6e5e63701ad37a5d57192143c527f']
         }
     },
     {
@@ -214,22 +209,24 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
-            accessLevel: READ_ONLY,
+            segmentationSessionId: 0,
             aesKey: '000102030405060708090a0b0c0d0e0f',
-            messageId: 1,
-            commands: [
-                {
-                    id: 7
-                }
-            ]
+            message: {
+                id: 1,
+                accessLevel: READ_ONLY,
+                commands: [
+                    {
+                        id: 7
+                    }
+                ]
+            }
         },
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
-            accessLevel: READ_ONLY,
-            messageId: 1,
-            data: '01134704a6e5e63701ad37a5d57192143c52'
+            segmentationSessionId: 0,
+            data: ['1e14009101134704a6e5e63701ad37a5d57192143c527f']
         }
     },
     {
@@ -238,13 +235,15 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
-            accessLevel: READ_ONLY,
             aesKey: '000102030405060708090a0b0c0d0e0f',
             framingFormat: HDLC,
-            frame: {
+            header: {
                 destination: 0xffff,
-                source: 0xfffe,
-                messageId: 1,
+                source: 0xfffe
+            },
+            message: {
+                id: 1,
+                accessLevel: READ_ONLY,
                 commands: [
                     {
                         id: 7
@@ -256,14 +255,8 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: HEX,
-            accessLevel: READ_ONLY,
             framingFormat: HDLC,
-            frame: {
-                destination: 0xffff,
-                source: 0xfffe,
-                messageId: 1,
-                data: '7e50fffffffe017d334704a6e5e63701ad37a5d57192143c52dee07e'
-            }
+            data: '7e50fffffffe017d334704a6e5e63701ad37a5d57192143c52dee07e'
         }
     },
     {
@@ -271,11 +264,11 @@ const tests = [
         request: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: READ_ONLY,
             aesKey: '000102030405060708090a0b0c0d0e0f',
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
+            message: {
+                id: 1,
+                accessLevel: READ_ONLY,
                 commands: [
                     {
                         id: 7
@@ -286,12 +279,8 @@ const tests = [
         response: {
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
-            accessLevel: READ_ONLY,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
-                data: '7e50fffffffe017d334704a6e5e63701ad37a5d57192143c52dee07e'
-            }
+            data: '7e50fffffffe017d334704a6e5e63701ad37a5d57192143c52dee07e'
         }
     },
     {
@@ -300,11 +289,11 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: READ_ONLY,
             aesKey: 'AAECAwQFBgcICQoLDA0ODw==',
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
+            message: {
+                id: 1,
+                accessLevel: READ_ONLY,
                 commands: [
                     {
                         id: 7
@@ -316,20 +305,16 @@ const tests = [
             deviceEUI: '001a79881701b63c',
             direction: DOWNLINK,
             bytesConversionFormat: BASE64,
-            accessLevel: READ_ONLY,
             framingFormat: HDLC,
-            frame: {
-                messageId: 1,
-                data: 'flD////+AX0zRwSm5eY3Aa03pdVxkhQ8Ut7gfg=='
-            }
+            data: 'flD////+AX0zRwSm5eY3Aa03pdVxkhQ8Ut7gfg=='
         }
     }
 ];
 
 
 const routes = [
-    {url: '/v1/encoder/mtx'},
-    {url: '/v1/encoder', requestExtension: {protocol: 'mtx'}}
+    {url: `/v2/encoder/${MTX}`},
+    {url: '/v2/encoder', requestExtension: {protocol: MTX}}
 ];
 
 
